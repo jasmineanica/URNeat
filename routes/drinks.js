@@ -1,14 +1,63 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const config = require('config');
 const Drink = require("../models/Drink");
+
 
 // @route     GET api/drinks
 // @desc      Get all drinks
-// @access    Private
-router.get('/', (req, res) => {
-  res.send('Get all drinks')
+// @access res.send('Update drink')   Public
+router.get('/', async(req, res) => {
+  try {
+    let drinks = await Drink.find({});
+    res.json(drinks);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
+
+// @route     GET api/drinks/beer
+// @desc      Get all drinks
+// @access res.send('Update drink')   Public
+router.get('/beer', async(req, res) => {
+  try {
+    let drinks = await Drink.find({ type: "Beer" });
+    res.json(drinks);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+
+// @route     GET api/drinks/beer
+// @desc      Get all drinks
+// @access res.send('Update drink')   Public
+router.get('/wine', async(req, res) => {
+  try {
+    let drinks = await Drink.find({ type: "Wine" });
+    res.json(drinks);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route     GET api/drinks/beer
+// @desc      Get all drinks
+// @access res.send('Update drink')   Public
+router.get('/spirits', async(req, res) => {
+  try {
+    let drinks = await Drink.find({ type: "Spirits" });
+    res.json(drinks);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 
 // @route     POST api/drinks
 // @desc      Add new drinks
