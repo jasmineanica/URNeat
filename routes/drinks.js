@@ -185,8 +185,21 @@ router.put(
 // @route     DELETE api/drinks/:id
 // @desc      Delete drink
 // @access    Private
-router.delete('/:id', (req, res) => {
-  res.send('Delete drink')
+router.delete(
+  '/:id',
+  auth,
+  async (req, res) => {
+    try {
+      let drink = await Drink.findById(req.params.id);
+      if(!drink) return res.status(404).json({ msg: 'Drink not found' });
+
+      drink = await Drink.findByIdAndDelete(req.params.id);
+      res.json(drink);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+
 });
 
 
